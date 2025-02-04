@@ -1,0 +1,17 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
+      ref: refs/tags/stable
+
+trigger: none
+
+stages:
+  #compile
+  - template: stages/nodejs-compile.yaml@templates
+    parameters:
+      stageName: refinement_sizing_tool
+      projectPath: /
+      sonarProjectName: RefinementSizingTool
+      snykOrganization: title-and-tax

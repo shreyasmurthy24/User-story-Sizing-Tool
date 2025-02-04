@@ -1,0 +1,33 @@
+<div class="sizing-container">
+    <div class="content">
+        <div class="user-list">
+            <div class="user-item" *ngFor="let user of userNames; let i = index">
+                <div class="user-name">{{ user }}</div>
+                <div class="user-number">
+                    <span *ngIf="clickedNumbers[i] === null">{{ displaySymbol[i] }}</span>
+                    <span *ngIf="clickedNumbers[i] !== null && !isRevealed">{{ tickMark }}</span>
+                    <span *ngIf="isRevealed && clickedNumbers[i] !== null" class="number-box-inline">{{
+                        clickedNumbers[i] }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="average-container" *ngIf="isRevealed">
+            <label class="average-label">Average:</label>
+            <span class="average-value">{{ calculateAverage() }}</span>
+        </div>
+        <div class="controls">
+            <div class="box">
+                <button class="button" (click)="onReveal()">Reveal</button>
+                <button class="button" (click)="onReset()" style="margin-top: 10px;">Reset</button>
+            </div>
+            <div class="robot-container" *ngIf="isRevealed">
+                <img [src]="robotImage" alt="Happy Robot" class="robot-image">
+            </div>
+        </div>
+        <div class="number-boxes">
+            <div class="number-box" *ngFor="let number of numbers" (click)="onNumberClick(number)">
+                {{ number }}
+            </div>
+        </div>
+    </div>
+</div>

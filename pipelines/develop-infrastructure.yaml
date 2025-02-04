@@ -1,0 +1,37 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
+      ref: refs/tags/stable
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - infrastructure
+
+variables:
+  - group: common
+stages:
+  #publish variables
+  - template: stages/publish-pipeline-artifacts.yaml@templates
+    parameters:
+      stageName: infrastructure
+      artifactName: infrastructure
+      publishPath: infrastructure
+
+  # scalr-deploy
+  - template: stages/scalr-deploy.yaml@templates
+    parameters:
+      repoName: RefinementSizingTool
+      environments:
+        - stageName: infrastructure_test
+          environment: test
+          dependsOn: publish_pipeline_artifacts_infrastructure
+          poolName: Amrock_Shared_NonProd_AWS_ADO_Runner
+          scalrEnvironmentName: Amrock-Sandbox-025962916459
+          terraformPath: infrastructure/025962916459/us-east-1/test
+          workspaceName: test-123456-us-east-1-novaservices-ui
