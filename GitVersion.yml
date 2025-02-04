@@ -1,0 +1,25 @@
+assembly-versioning-scheme: Major
+increment: Minor
+mode: ContinuousDeployment
+next-version: 1.0.3
+branches:
+  main:
+    regex: ^main$
+    label: release
+    source-branches: ["main"]
+    tracks-release-branches: false
+  develop:
+    regex: ^develop$
+    label: dev
+    source-branches: ["main"]
+    tracks-release-branches: false
+  release:
+    regex: ^release$
+    label: release
+    source-branches: ["main"]
+    tracks-release-branches: false
+  hotfix:
+    regex: ^hotfix$
+    label: hotfix
+    source-branches: ["main"]
+    tracks-release-branches: false
