@@ -1,0 +1,18 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Aileron", sans-serif;
+}
+
+.container {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+button {
+    border-radius: 50px !important;
+}
