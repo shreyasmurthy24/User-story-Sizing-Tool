@@ -61,7 +61,6 @@ module.exports = function (config) {
             "--user-data-dir=/tmp/chrome-test-profile",
             "--disable-web-security",
             "--remote-debugging-port=9222",
-            '--disable-gpu'
           ],
           debug: true,
         },
