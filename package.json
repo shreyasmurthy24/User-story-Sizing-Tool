@@ -1,15 +1,13 @@
 {
   "name": "refinement-sizing-tool",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build-ci": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "test-ci": "ng test --watch=false --code-coverage --browsers=ChromeHeadlessCustom --progress",
-    "e2e": "ng e2e"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
