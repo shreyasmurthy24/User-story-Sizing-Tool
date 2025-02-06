@@ -1,18 +1,7 @@
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: "Aileron", sans-serif;
-}
-
-.container {
-    padding-left: 16px;
-    padding-right: 16px;
-}
-
-button {
-    border-radius: 50px !important;
+* {
+    font-family: 'Roboto', Arial, sans-serif;
+    color: #616161;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
