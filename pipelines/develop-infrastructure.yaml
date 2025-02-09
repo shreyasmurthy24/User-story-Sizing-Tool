@@ -1,32 +1,32 @@
 resources:
   repositories:
-    - repository: templates
-      type: git
-      name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
-      ref: refs/tags/stable
+  - repository: templates
+    type: git
+    name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
+    ref: refs/tags/stable
 
 trigger:
   branches:
     include:
-      - develop
+      - develop   
   paths:
     include:
       - infrastructure
 
 variables:
-  - group: common
+- group: common
 stages:
-  #publish variables
-  - template: stages/publish-pipeline-artifacts.yaml@templates
-    parameters:
-      stageName: infrastructure
-      artifactName: infrastructure
-      publishPath: infrastructure
+#publish variables
+- template: stages/publish-pipeline-artifacts.yaml@templates
+  parameters:
+    stageName: infrastructure
+    artifactName: infrastructure
+    publishPath: infrastructure
 
   # scalr-deploy
   - template: stages/scalr-deploy.yaml@templates
     parameters:
-      repoName: RefinementSizingTool
+      repoName: SizingTool
       environments:
         - stageName: infrastructure_test
           environment: test

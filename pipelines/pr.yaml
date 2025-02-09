@@ -11,7 +11,7 @@ stages:
   #compile
   - template: stages/nodejs-compile.yaml@templates
     parameters:
-      stageName: refinement_sizing_tool
+      stageName: sizing_tool
       projectPath: /
-      sonarProjectName: RefinementSizingTool
-      snykOrganization: title-and-tax
+      sonarProjectName: SizingTool
+      snykOrganization: appraisal

@@ -3,7 +3,7 @@ resources:
   - repository: templates
     type: git
     name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
-    ref: refs/tags/alpha
+    ref: refs/tags/stable
 
 trigger:
   branches:
@@ -14,22 +14,22 @@ stages:
 #compile
 - template: stages/nodejs-compile.yaml@templates
   parameters:
-    stageName: refinement_sizing_tool
+    stageName: sizing_tool
     projectPath: /
-    sonarProjectName: RefinementSizingTool
-    snykOrganization: title-and-tax
+    sonarProjectName: SizingTool
+    snykOrganization: appraisal
     #publishPath: /dist
 
 #deploy
 - template: stages/nodejs-deploy.yaml@templates
   parameters:
     environments:
-    - stageName: refinementsizingtool_test
+    - stageName: sizingtool_test
       environment: test
-      dependsOn: nodejs_compile_refinement_sizing_tool
-      poolName: Amrock_Shared_Sandbox_AWS_ADO_Runner
-      variables: pipelines/variables/test.yaml@self
+      dependsOn: nodejs_compile_sizing_tool
+      poolName: Amrock_Shared_NonProd_AWS_ADO_Runner
       bucketName: tap-refinement-sizing-tool
       cloudFrontDistributionId: E3VAIXS4HLEC10
 	    sourceFilePath: 'app/Refinement-Sizing-Tool'
+      variables: pipelines/variables/test.yaml@self
 	    replaceTokens: 'app/*/*.js'
