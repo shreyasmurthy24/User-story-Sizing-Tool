@@ -11,6 +11,7 @@ trigger:
       - develop
 
 stages:
+
 #compile
 - template: stages/nodejs-compile.yaml@templates
   parameters:
