@@ -31,6 +31,4 @@ stages:
       poolName: Amrock_Shared_NonProd_AWS_ADO_Runner
       bucketName: tap-refinement-sizing-tool
       cloudFrontDistributionId: E3VAIXS4HLEC10
-	    sourceFilePath: 'app/Refinement-Sizing-Tool'
       variables: pipelines/variables/test.yaml@self
-	    replaceTokens: 'app/*/*.js'
