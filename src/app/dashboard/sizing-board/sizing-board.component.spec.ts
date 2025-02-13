@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SizingBoardComponent } from './sizing-board.component';
+import { provideRouter } from '@angular/router';
 
 describe('SizingBoardComponent', () => {
   let component: SizingBoardComponent;
@@ -8,9 +8,10 @@ describe('SizingBoardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SizingBoardComponent]
+      imports: [SizingBoardComponent],
+      providers: [provideRouter([])]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SizingBoardComponent);
     component = fixture.componentInstance;
