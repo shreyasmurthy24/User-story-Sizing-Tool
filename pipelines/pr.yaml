@@ -8,10 +8,10 @@ resources:
 trigger: none
 
 stages:
-  #compile
-  - template: stages/nodejs-compile.yaml@templates
-    parameters:
-      stageName: sizing_tool
-      projectPath: /
-      sonarProjectName: SizingTool
-      snykOrganization: appraisal
+#compile
+- template: stages/nodejs-compile.yaml@templates
+  parameters:
+    stageName: sizing_tool
+    projectPath: /
+    sonarProjectName: SizingTool
+    snykOrganization: appraisal

@@ -11,7 +11,6 @@ trigger:
       - develop
 
 stages:
-
 #compile
 - template: stages/nodejs-compile.yaml@templates
   parameters:
@@ -29,6 +28,6 @@ stages:
       environment: test
       dependsOn: nodejs_compile_sizing_tool
       poolName: Amrock_Shared_NonProd_AWS_ADO_Runner
-      bucketName: tap-refinement-sizing-tool
-      cloudFrontDistributionId: E3VAIXS4HLEC10
       variables: pipelines/variables/test.yaml@self
+      bucketName: $(bucketName)
+      cloudFrontDistributionId: $(cloudFrontDistributionId)      

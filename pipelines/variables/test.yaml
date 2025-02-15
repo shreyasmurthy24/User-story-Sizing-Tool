@@ -1,3 +1,9 @@
 variables:
-  - name: AWS_ROLE_ARN
-    value: arn:aws:iam::517666809163:role/iac/ec2/role-nonprod-us-east-2-211870-ado-runner
+- name: apiUrl
+  value: https://sizingtool-test.amrock-shared-np.foc.zone
+- name: AWS_ROLE_ARN
+  value: arn:aws:iam::517666809163:role/iac/ec2/role-nonprod-us-east-2-211870-ado-runner
+- name: cloudFrontDistributionId
+  value: E295H69B5EZH0P
+- name: bucketName
+  value: tap-refinement-sizing-tool
