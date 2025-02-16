@@ -58,10 +58,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Sizing-Tool:build:production"
+              "buildTarget": "Sizing-Tool:build:production"
             },
             "development": {
-              "browserTarget": "Sizing-Tool:build:development"
+              "buildTarget": "Sizing-Tool:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -69,7 +69,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Sizing-Tool:build"
+            "buildTarget": "Sizing-Tool:build"
           }
         },
         "test": {
