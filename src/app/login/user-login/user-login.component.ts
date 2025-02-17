@@ -15,6 +15,7 @@ export class UserLoginComponent {
   //userName: string = '';
   generatedPinValue: string = '';
   formGroup: FormGroup;
+  //users: { userName: string }[] = [];
 
   constructor(private userService: UserService, private router: Router, private formbuilder: FormBuilder) {
     this.formGroup = this.formbuilder.group({

@@ -5,7 +5,12 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
-  // constructor() { }
+  // constructor() { 
+  //   this.addUser('Angelina Joli', '1234');
+  //   this.addUser('Tom Cat', '1234');
+  //   this.addUser('Abraham Lincoln', '5678');
+  //   this.addUser('John Doe', '5678');
+  // }
   //private users: string[] = ['Angelina Joli', 'Tom Cat', 'Abraham Linclon', 'John Doe'];
 
   // private users: { userName: string, pin: string }[] = [];
