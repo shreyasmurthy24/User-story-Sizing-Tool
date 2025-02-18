@@ -1,6 +1,6 @@
 variables:
 - name: apiUrl
-  value: https://sizingtool-test.amrock-shared-np.foc.zone
+  value: https://sizingtool-test.amrock-sb.foc.zone
 - name: AWS_ROLE_ARN
   value: arn:aws:iam::025962916459:role/iac/ec2/role-sandbox-us-east-2-210461-ado-runner
 - name: cloudFrontDistributionId
