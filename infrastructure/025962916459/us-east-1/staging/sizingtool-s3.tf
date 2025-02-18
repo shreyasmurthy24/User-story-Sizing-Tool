@@ -1,10 +1,10 @@
-module "novaservices-ui-s3-cloudfront" {
+module "sizingtool-s3-cloudfront" {
   source                         = "git::https://github.com/foc-iac/terraform-aws-s3-cloudfront-waf.git?ref=5.2.0"
   aws_account_id                 = "025962916459"
   aws_region                     = "us-east-1"
   app_id                         = "123456"
   application_name               = "refinementsizingtool"
-  environment                    = "test"
+  environment                    = "staging"
   development_team_email         = "shreyasmurthychitloorkrishna@amrock.com"
   infrastructure_team_email      = "shreyasmurthychitloorkrishna@amrock.com"
   infrastructure_engineer_email  = "shreyasmurthychitloorkrishna@amrock.com"
