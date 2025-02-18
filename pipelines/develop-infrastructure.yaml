@@ -13,20 +13,21 @@ trigger:
     include:
       - infrastructure
 
-variables:
-  - group: common
+# variables:
+#   - group: common
 stages:
   #publish variables
-  - template: stages/publish-pipeline-artifacts.yaml@templates
-    parameters:
-      stageName: infrastructure
-      artifactName: infrastructure
-      publishPath: infrastructure
+  # - template: stages/publish-pipeline-artifacts.yaml@templates
+  #   parameters:
+  #     stageName: infrastructure
+  #     artifactName: infrastructure
+  #     publishPath: infrastructure
 
 # scalr-deploy
 - template: stages/scalr-deploy.yaml@templates
   parameters:
     repoName: SizingTool
+    defaultBranch: develop
     environments:
     - stageName: infrastructure_test
       environment: test
@@ -35,3 +36,4 @@ stages:
       scalrEnvironmentName: Amrock-Sandbox-025962916459
       terraformPath: infrastructure/025962916459/us-east-1/test
       workspaceName: test-123456-us-east-1-sizingtool
+      variables: pipelines/variables/test.yaml@self
