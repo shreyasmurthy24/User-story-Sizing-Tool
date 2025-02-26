@@ -1,9 +1,9 @@
 resources:
   repositories:
-    - repository: templates
-      type: git
-      name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
-      ref: refs/tags/stable
+  - repository: templates
+    type: git
+    name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
+    ref: refs/tags/stable
 
 trigger:
   branches:
@@ -32,7 +32,7 @@ stages:
     - stageName: infrastructure_test
       environment: test
       dependsOn: publish_pipeline_artifacts_infrastructure
-      poolName: Amrock_Shared_NonProd_AWS_ADO_Runner
+      poolName: Amrock_Shared_Sandbox_AWS_ADO_Runner
       scalrEnvironmentName: Amrock-Sandbox-025962916459
       terraformPath: infrastructure/025962916459/us-east-1/test
       workspaceName: test-123456-us-east-1-sizingtool
