@@ -4,6 +4,6 @@ variables:
 - name: AWS_ROLE_ARN
   value: arn:aws:iam::025962916459:role/iac/ec2/role-sandbox-us-east-2-210461-ado-runner
 - name: cloudFrontDistributionId
-  value: E3HD6O9451SOMG
+  value: EVJO95A6LYZYU
 - name: bucketName
   value: tapsizingtool-test.amrock-sb.foc.zone
