@@ -35,4 +35,4 @@ stages:
       poolName: Amrock_Shared_Sandbox_AWS_ADO_Runner
       scalrEnvironmentName: Amrock-Sandbox-025962916459
       terraformPath: infrastructure/025962916459/us-east-1/test
-      workspaceName: test-123456-us-east-1-sizingtool
+      workspaceName: test-222530-us-east-1-tapsizingtool
