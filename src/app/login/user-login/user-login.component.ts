@@ -12,10 +12,8 @@ import { UserService } from '../../service/user-service.service';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class UserLoginComponent {
-  //userName: string = '';
   generatedPinValue: string = '';
   formGroup: FormGroup;
-  //users: { userName: string }[] = [];
 
   constructor(private userService: UserService, private router: Router, private formbuilder: FormBuilder) {
     this.formGroup = this.formbuilder.group({
@@ -24,32 +22,19 @@ export class UserLoginComponent {
     });
   }
 
-  // onLogin(userName: string) {
-  //   // this.router.navigate(['/sizing-board'], { queryParams: { name: this.userName } });
-  //   if (userName) {
-  //     this.userService.addUser(userName);
-  //     this.router.navigate(['/sizing-board']);
-  //   }
-  // }
-
   onLogin() {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
       return;
     }
 
-    const userName = this.formGroup.get('userName')?.value;
     const pin = this.formGroup.get('pin')?.value;
 
-    if (this.userService.validatePin(userName, pin)) {
-      console.log('Login successful for user:', userName);
-      // if (userName) {
-      // this.userService.addUsers(userName);
-      this.router.navigate(['/sizing-board'], { queryParams: { name: userName, pin } });
-      // this.authService.clearPin();
-      // }
+    if (pin) {
+      console.log('Login successful. Redirecting to sizing board with PIN:', pin);
+      this.router.navigate(['/sizing-board'], { queryParams: { pin } }); // Only pass the PIN in query params
     } else {
-      console.log('Invalid pin', this.generatedPinValue);
+      console.log('Invalid PIN');
     }
   }
 
@@ -58,7 +43,6 @@ export class UserLoginComponent {
     console.log(this.generatedPinValue);
     pinInput.placeholder = this.generatedPinValue;
     this.formGroup.get('pin')?.setValue(this.generatedPinValue);
-    // this.authService.setPin(this.generatedPinValue);
-    this.userService.addUser(this.formGroup.get('userName')?.value, this.generatedPinValue);
+    this.userService.addUser(this.formGroup.get('userName')?.value, this.generatedPinValue); // Add user to session
   }
 }

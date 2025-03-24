@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../service/user-service.service';
+import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-sizing-board',
@@ -11,6 +12,7 @@ import { UserService } from '../../service/user-service.service';
   imports: [CommonModule]
 })
 export class SizingBoardComponent {
+  private socket$!: WebSocketSubject<any>;
   users: { userName: string }[] = [];
   userNames: string[] = [];
   numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -22,47 +24,56 @@ export class SizingBoardComponent {
   robotImage = '';
   pin: string = '';
 
-  // constructor(private route: ActivatedRoute) { }
   constructor(private userService: UserService, private route: ActivatedRoute) { }
 
-  // ngOnInit(): void {
-  //   this.route.queryParams.subscribe(params => {
-  //     this.userNames = params['name'] || 'Guest';
-  //   });
-  // }
-
   ngOnInit() {
-    // this.users = this.userService.getUsers();
-    // this.clickedNumbers = new Array(this.users.length).fill(null);
-    // this.users = this.userService.getUsers();
-    // this.userNames = this.users.map(user => user.userName);
-    // this.clickedNumbers = new Array(this.userNames.length).fill(null);
-    // this.displaySymbol = new Array(this.userNames.length).fill('?');
     this.route.queryParams.subscribe(params => {
       this.pin = params['pin'];
-      this.users = this.userService.getUsers(this.pin);
-      this.userNames = this.users.map(user => user.userName);
-      this.clickedNumbers = new Array(this.userNames.length).fill(null);
-      this.displaySymbol = new Array(this.userNames.length).fill('?');
+      if (this.pin) {
+        const userName = prompt('Enter your name to join the room:');
+        if (userName) {
+          this.initializeWebSocket(userName);
+          this.clickedNumbers = new Array(this.userNames.length).fill(null);
+        } else {
+          console.error('User name is required to join the room.');
+        }
+      } else {
+        console.error('PIN is missing in the URL.');
+      }
     });
+  }
+
+  initializeWebSocket(userName: string) {
+    if (!userName) {
+        console.error('User name is not available. Ensure the user is logged in correctly.');
+        return;
+    }
+
+    this.socket$ = new WebSocketSubject(`ws://localhost:3000?pin=${this.pin}`);
+    this.socket$.subscribe((message: any) => {
+        if (message.type === 'USER_JOINED') {
+            this.users = message.users;
+            this.userNames = this.users.map(user => user.userName);
+            this.clickedNumbers = new Array(this.userNames.length).fill(null);
+        }
+    });
+
+    this.socket$.next({ type: 'JOIN_ROOM', userName, pin: this.pin });
   }
 
   onNumberClick(num: number) {
     if (this.clickedNumbers) {
-      for (let i = 0; i < this.clickedNumbers.length; i++) {
-        if (this.clickedNumbers[i] === null) {
-          this.clickedNumbers[i] = num;
-          this.displaySymbol[i] = this.tickMark;
-          break;
+        for (let i = 0; i < this.clickedNumbers.length; i++) {
+            if (this.clickedNumbers[i] === null) {
+                this.clickedNumbers[i] = num;
+                break;
+            }
         }
-      }
-      this.isRevealed = false;
+        this.isRevealed = false;
     }
   }
 
   onReveal(): void {
-    // this.isRevealed = true;
-    // this.robotImage = 'assets/HappyRobot.png';
     this.displayRobotImagesBasedOnUserSizes();
   }
 
@@ -116,10 +127,6 @@ export class SizingBoardComponent {
   }
 
   onReset(): void {
-    // this.isReset = true;
-    // this.clickedNumbers = [];
-    // this.displaySymbol = '?';
-    // this.isRevealed = false;
     this.isRevealed = false;
     this.clickedNumbers = new Array(this.users.length).fill(null);
     this.displaySymbol = new Array(this.users.length).fill('?');

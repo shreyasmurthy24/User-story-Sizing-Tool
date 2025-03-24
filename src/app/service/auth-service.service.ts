@@ -12,10 +12,6 @@ export class AuthService {
     this.pin = pin;
   }
 
-  // getPin(): string {
-  //   return this.pin;
-  // }
-
   validatePin(enteredPin: string): boolean {
     return this.pin === enteredPin;
   }
