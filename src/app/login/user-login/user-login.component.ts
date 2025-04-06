@@ -32,7 +32,7 @@ export class UserLoginComponent {
 
     if (pin) {
       console.log('Login successful. Redirecting to sizing board with PIN:', pin);
-      this.router.navigate(['/sizing-board'], { queryParams: { pin } }); // Only pass the PIN in query params
+      this.router.navigate(['/sizing-board'], { queryParams: { pin } });
     } else {
       console.log('Invalid PIN');
     }
@@ -43,6 +43,6 @@ export class UserLoginComponent {
     console.log(this.generatedPinValue);
     pinInput.placeholder = this.generatedPinValue;
     this.formGroup.get('pin')?.setValue(this.generatedPinValue);
-    this.userService.addUser(this.formGroup.get('userName')?.value, this.generatedPinValue); // Add user to session
+    this.userService.addUser(this.formGroup.get('userName')?.value, this.generatedPinValue);
   }
 }
