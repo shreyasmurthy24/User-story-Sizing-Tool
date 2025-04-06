@@ -15,3 +15,5 @@ stages:
     projectPath: /
     sonarProjectName: SizingTool
     snykOrganization: appraisal
+    sonarArgument:
+      sonar.coverage.exclusions="**/*.ts"
