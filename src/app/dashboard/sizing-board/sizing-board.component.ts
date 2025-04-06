@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../service/user-service.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field'; // Import MatFormFieldModule
+import { MatInputModule } from '@angular/material/input'; // Import MatInputModule
+import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { UsernameDialogComponent } from '../../shared/username-dialog/username-dialog.component';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
@@ -9,7 +13,13 @@ import { WebSocketSubject } from 'rxjs/webSocket';
   templateUrl: './sizing-board.component.html',
   styleUrl: './sizing-board.component.scss',
   standalone: true,
-  imports: [CommonModule]
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule // Add FormsModule for ngModel
+  ]
 })
 export class SizingBoardComponent {
   private socket$!: WebSocketSubject<any>;
@@ -24,38 +34,48 @@ export class SizingBoardComponent {
   robotImage = '';
   pin: string = '';
 
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.pin = params['pin'];
       if (this.pin) {
-        const userName = prompt('Enter your name to join the room:');
-        if (userName) {
-          this.initializeWebSocket(userName);
-          this.clickedNumbers = new Array(this.userNames.length).fill(null);
-        } else {
-          console.error('User name is required to join the room.');
-        }
+        this.openUsernameDialog();
       } else {
         console.error('PIN is missing in the URL.');
       }
     });
   }
 
+  openUsernameDialog(): void {
+    const dialogRef = this.dialog.open(UsernameDialogComponent, {
+      width: '300px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(userName => {
+      if (userName) {
+        this.initializeWebSocket(userName);
+        this.clickedNumbers = new Array(this.userNames.length).fill(null);
+      } else {
+        console.error('User name is required to join the room.');
+      }
+    });
+  }
+
   initializeWebSocket(userName: string) {
     if (!userName) {
-        console.error('User name is not available. Ensure the user is logged in correctly.');
-        return;
+      console.error('User name is not available. Ensure the user is logged in correctly.');
+      return;
     }
 
     this.socket$ = new WebSocketSubject(`ws://localhost:3000?pin=${this.pin}`);
     this.socket$.subscribe((message: any) => {
-        if (message.type === 'USER_JOINED') {
-            this.users = message.users;
-            this.userNames = this.users.map(user => user.userName);
-            this.clickedNumbers = new Array(this.userNames.length).fill(null);
-        }
+      if (message.type === 'USER_JOINED') {
+        this.users = message.users;
+        this.userNames = this.users.map(user => user.userName);
+        this.clickedNumbers = new Array(this.userNames.length).fill(null);
+      }
     });
 
     this.socket$.next({ type: 'JOIN_ROOM', userName, pin: this.pin });
@@ -63,13 +83,13 @@ export class SizingBoardComponent {
 
   onNumberClick(num: number) {
     if (this.clickedNumbers) {
-        for (let i = 0; i < this.clickedNumbers.length; i++) {
-            if (this.clickedNumbers[i] === null) {
-                this.clickedNumbers[i] = num;
-                break;
-            }
+      for (let i = 0; i < this.clickedNumbers.length; i++) {
+        if (this.clickedNumbers[i] === null) {
+          this.clickedNumbers[i] = num;
+          break;
         }
-        this.isRevealed = false;
+      }
+      this.isRevealed = false;
     }
   }
 
