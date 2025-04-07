@@ -37,9 +37,11 @@ export class SizingBoardComponent {
   constructor(private route: ActivatedRoute, private dialog: MatDialog) {}
 
   ngOnInit() {
+    console.log('SizingBoardComponent initialized');
     this.route.queryParams.subscribe(params => {
       this.pin = params['pin'];
       if (this.pin) {
+        console.log('PIN found in URL:', this.pin);
         this.openUsernameDialog();
       } else {
         console.error('PIN is missing in the URL.');
