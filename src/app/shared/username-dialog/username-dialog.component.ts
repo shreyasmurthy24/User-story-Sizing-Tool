@@ -94,6 +94,7 @@ export class UsernameDialogComponent {
   }
 
   openDialog(): void {
+    this.logger.log('Opening username dialog...'); // Debug log
     const dialogRef = this.dialog.open(UsernameDialogComponent, {
       width: '400px',
     });
