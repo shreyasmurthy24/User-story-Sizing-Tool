@@ -4,8 +4,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class LoggingService {
@@ -36,7 +37,7 @@ export class LoggingService {
     </div>
     <div mat-dialog-actions class="dialog-actions">
       <button mat-button (click)="onCancel()" class="cancel-button">Cancel</button>
-      <button mat-raised-button color="primary" (click)="onSubmit()" cdkFocusInitial>Join</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!userName.trim()" cdkFocusInitial>Join</button>
     </div>
   `,
   styles: [`
@@ -76,16 +77,33 @@ export class UsernameDialogComponent {
   userName: string = '';
   constructor(
     public dialogRef: MatDialogRef<UsernameDialogComponent>,
-    private logger: LoggingService
+    private logger: LoggingService,
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   onCancel(): void {
     this.logger.log('Username dialog canceled.');
     this.dialogRef.close(null);
+    this.router.navigateByUrl('/user-login');
   }
 
   onSubmit(): void {
     this.logger.log('Username dialog submitted with username:', this.userName.trim());
     this.dialogRef.close(this.userName.trim());
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(UsernameDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.logger.log('Dialog closed with username:', result);
+      } else {
+        this.logger.log('Dialog was closed without a username.');
+      }
+    });
   }
 }

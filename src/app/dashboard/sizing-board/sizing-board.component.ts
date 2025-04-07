@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field'; // Import MatFormFieldModule
-import { MatInputModule } from '@angular/material/input'; // Import MatInputModule
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 import { UsernameDialogComponent } from '../../shared/username-dialog/username-dialog.component';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
@@ -18,7 +18,7 @@ import { WebSocketSubject } from 'rxjs/webSocket';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule // Add FormsModule for ngModel
+    FormsModule
   ]
 })
 export class SizingBoardComponent {

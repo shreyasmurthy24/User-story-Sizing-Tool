@@ -5,7 +5,8 @@ import { SizingBoardComponent } from './dashboard/sizing-board/sizing-board.comp
 
 const routes: Routes = [
   { path: '', component: UserLoginComponent },
-  { path: 'sizing-board', component: SizingBoardComponent }
+  { path: 'sizing-board', component: SizingBoardComponent },
+  { path: 'user-login', component: UserLoginComponent }
 ];
 
 @NgModule({
