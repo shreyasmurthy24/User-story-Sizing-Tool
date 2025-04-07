@@ -64,14 +64,16 @@ import { CommonModule } from '@angular/common';
 })
 export class UsernameDialogComponent {
   userName: string = '';
-
   constructor(public dialogRef: MatDialogRef<UsernameDialogComponent>) {}
 
   onCancel(): void {
+    console.log('Username dialog canceled.');
     this.dialogRef.close(null);
   }
 
   onSubmit(): void {
+      console.log('Username dialog');
+    console.log('Username dialog submitted with username:', this.userName.trim());
     this.dialogRef.close(this.userName.trim());
   }
 }
