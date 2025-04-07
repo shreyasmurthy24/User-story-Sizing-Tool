@@ -4,6 +4,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+export class LoggingService {
+  log(message: string, data?: any): void {
+    console.log(message, data);
+  }
+}
 
 //https://www.youtube.com/watch?v=ho8bJ-MQwiU
 @Component({
@@ -13,7 +22,8 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
   ],
   template: `
     <h1 mat-dialog-title class="dialog-title">Welcome!</h1>
@@ -64,16 +74,18 @@ import { CommonModule } from '@angular/common';
 })
 export class UsernameDialogComponent {
   userName: string = '';
-  constructor(public dialogRef: MatDialogRef<UsernameDialogComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<UsernameDialogComponent>,
+    private logger: LoggingService
+  ) {}
 
   onCancel(): void {
-    console.log('Username dialog canceled.');
+    this.logger.log('Username dialog canceled.');
     this.dialogRef.close(null);
   }
 
   onSubmit(): void {
-      console.log('Username dialog');
-    console.log('Username dialog submitted with username:', this.userName.trim());
+    this.logger.log('Username dialog submitted with username:', this.userName.trim());
     this.dialogRef.close(this.userName.trim());
   }
 }
