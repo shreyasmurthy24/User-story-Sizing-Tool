@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,7 +21,7 @@ import { WebSocketSubject } from 'rxjs/webSocket';
     FormsModule
   ]
 })
-export class SizingBoardComponent {
+export class SizingBoardComponent implements OnInit{
   private socket$!: WebSocketSubject<any>;
   users: { userName: string }[] = [];
   userNames: string[] = [];
