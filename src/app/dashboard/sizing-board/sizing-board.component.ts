@@ -34,9 +34,11 @@ export class SizingBoardComponent implements OnInit{
   robotImage = '';
   pin: string = '';
 
-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {}
+  constructor(private route: ActivatedRoute, private dialog: MatDialog) {
+    console.log('SizingBoardComponent constructor called');
+  }
 
-  ngOnInit() {
+  ngOnInit() : void {
     console.log('SizingBoardComponent initialized');
     this.route.queryParams.subscribe(params => {
       this.pin = params['pin'];
