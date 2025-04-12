@@ -1,9 +1,9 @@
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 3000 });
+const wss = new WebSocket.Server({ port: 3000, host: '0.0.0.0' });
 
 const rooms = {};
-
-console.log('WebSocket server is running on ws://localhost:3000');
+//Security group - 'launch-wizard-17':
+console.log('WebSocket server is running on ws://0.0.0.0:3000');
 
 wss.on('connection', (ws, req) => {
   console.log('New client connected');
