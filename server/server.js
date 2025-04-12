@@ -1,11 +1,10 @@
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 3000, host: 'localhost' });
-//const wss = new WebSocket.Server({ port: 3000, host: '0.0.0.0' });
+const wss = new WebSocket('ws://3.147.78.217:3000'); // EC2 webscoket ec2 server
+//const wss = new WebSocket.Server({ port: 3000, host: 'localhost' }); // Localhost for testing
 
 const rooms = {};
-// Log message updated to reflect localhost and port 4200
-console.log('WebSocket server is running on ws://localhost:3000');
-//console.log('WebSocket server is running on ws://0.0.0.0:3000');
+// Log message updated to reflect EC2 setup
+console.log('WebSocket server is running on ws://3.147.78.217:3000');
 
 wss.on('connection', (ws, req) => {
   console.log('New client connected');
