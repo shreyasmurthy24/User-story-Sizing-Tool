@@ -1,12 +1,30 @@
 const fs = require('fs');
+const path = require('path');
+const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 
-const server = http.createServer(); 
-const wss = new WebSocket.Server({ server });
+const app = express();
+const server = http.createServer(app);
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+server.listen(80, () => {
+  console.log('HTTP server is running on port 80');
+});
+
+const wsServer = http.createServer(); 
+const wss = new WebSocket.Server({ server: wsServer });
+
+wsServer.listen(3000, () => {
+  console.log('WebSocket server is running on ws://ec2-3-128-172-225.us-east-2.compute.amazonaws.com:3000');
+});
 
 const rooms = {};
-console.log('WebSocket server is running on ws://ec2-3-128-172-225.us-east-2.compute.amazonaws.com:3000');
 
 wss.on('connection', (ws, req) => {
   console.log('New client connected');
@@ -43,8 +61,4 @@ wss.on('connection', (ws, req) => {
       });
     }
   }
-});
-
-server.listen(3000, () => {
-  console.log('HTTPS server is running on port 3000');
 });
