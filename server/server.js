@@ -1,18 +1,12 @@
 const fs = require('fs');
-const https = require('https');
+const http = require('http');
 const WebSocket = require('ws');
 
-
-const server = https.createServer({
-  cert: fs.readFileSync('/path/to/your/certificate.pem'),
-  key: fs.readFileSync('/path/to/your/private-key.pem')
-});
-
-
+const server = http.createServer(); 
 const wss = new WebSocket.Server({ server });
 
 const rooms = {};
-console.log('WebSocket server is running on wss://ec2-3-147-78-217.us-east-2.compute.amazonaws.com:3000');
+console.log('WebSocket server is running on ws://ec2-3-128-172-225.us-east-2.compute.amazonaws.com:3000');
 
 wss.on('connection', (ws, req) => {
   console.log('New client connected');
