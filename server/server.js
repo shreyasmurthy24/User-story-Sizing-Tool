@@ -13,8 +13,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-server.listen(80, () => {
-  console.log('HTTP server is running on port 80');
+server.listen(3000, () => {
+  console.log('HTTP server is running on port 3000');
 });
 
 const wsServer = http.createServer(); 
