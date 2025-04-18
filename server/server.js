@@ -21,7 +21,7 @@ const wsServer = http.createServer();
 const wss = new WebSocket.Server({ server: wsServer });
 
 wsServer.listen(3000, () => {
-  console.log('WebSocket server is running on ws://ec2-3-128-172-225.us-east-2.compute.amazonaws.com:3000');
+  console.log('WebSocket server is running on wss://ec2-3-128-172-225.us-east-2.compute.amazonaws.com:3000');
 });
 
 const rooms = {};
