@@ -13,11 +13,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-server.listen(3000, () => {
-  console.log('HTTP server is running on port 3000');
-});
+// server.listen(3000, () => {
+//   console.log('HTTP server is running on port 3000');
+// });
 
-const wsServer = http.createServer(); 
+// const wsServer = http.createServer(); 
 const wss = new WebSocket.Server({ server: wsServer });
 
 wsServer.listen(3000, () => {
