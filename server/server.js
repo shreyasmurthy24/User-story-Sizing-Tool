@@ -6,6 +6,7 @@ const WebSocket = require('ws');
 
 const app = express();
 const server = http.createServer(app);
+const wss = new WebSocket.Server({ server }); 
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -18,7 +19,7 @@ app.get('*', (req, res) => {
 // });
 
 // const wsServer = http.createServer(); 
-const wss = new WebSocket.Server({ server: wsServer });
+// const wss = new WebSocket.Server({ server: wsServer });
 
 wsServer.listen(3000, () => {
   console.log('WebSocket server is running on ws://ec2-3-147-205-48.us-east-2.compute.amazonaws.com:3000');
