@@ -21,6 +21,7 @@ app.get('/*', (req, res) => {
 const wsServer = http.createServer(); 
 // const wss = new WebSocket.Server({ server: wsServer });
 
+const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
 wsServer.listen(3000, () => {
   console.log('WebSocket server is running on ws://ec2-3-147-205-48.us-east-2.compute.amazonaws.com:3000');
 });

@@ -73,7 +73,10 @@ export class SizingBoardComponent implements OnInit{
       return;
     }
 
-    this.socket$ = new WebSocketSubject(`ws://ec2-3-147-205-48.us-east-2.compute.amazonaws.com:3000?pin=${this.pin}`);
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const wsUrl = `${protocol}://ec2-3-128-172-225.us-east-2.compute.amazonaws.com:3000?pin=${this.pin}`;
+
+    this.socket$ = new WebSocketSubject(wsUrl);
     this.socket$.subscribe((message: any) => {
       if (message.type === 'USER_JOINED') {
         this.users = message.users;
