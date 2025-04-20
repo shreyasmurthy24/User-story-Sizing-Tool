@@ -18,11 +18,11 @@ app.get('/*', (req, res) => {
 //   console.log('HTTP server is running on port 3000');
 // });
 
-const wsServer = http.createServer(); 
+//const wsServer = http.createServer(); 
 // const wss = new WebSocket.Server({ server: wsServer });
 
 //const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-wsServer.listen(3000, () => {
+server.listen(3000, () => {
   console.log('WebSocket server is running on wss://ec2-3-147-205-48.us-east-2.compute.amazonaws.com:3000');
 });
 
