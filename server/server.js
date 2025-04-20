@@ -18,7 +18,7 @@ app.get('/*', (req, res) => {
 //   console.log('HTTP server is running on port 3000');
 // });
 
-// const wsServer = http.createServer(); 
+const wsServer = http.createServer(); 
 // const wss = new WebSocket.Server({ server: wsServer });
 
 wsServer.listen(3000, () => {
