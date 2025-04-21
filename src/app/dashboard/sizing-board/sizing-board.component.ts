@@ -60,6 +60,7 @@ export class SizingBoardComponent implements OnInit{
     dialogRef.afterClosed().subscribe(userName => {
       if (userName) {
         this.userNames.push(userName);
+        console.log('User name entered:', userName);
         this.initializeWebSocket(userName);
         this.clickedNumbers = new Array(this.userNames.length).fill(null);
       } else {
@@ -74,8 +75,7 @@ export class SizingBoardComponent implements OnInit{
       return;
     }
 
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const wsUrl = `${protocol}://ec2-3-147-205-48.us-east-2.compute.amazonaws.com:3000?pin=${this.pin}`;
+    const wsUrl = `ws://localhost:3000?pin=${this.pin}`;
 
     this.socket$ = new WebSocketSubject(wsUrl);
     this.socket$.subscribe((message: any) => {
