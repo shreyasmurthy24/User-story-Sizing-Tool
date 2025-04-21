@@ -14,8 +14,8 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-server.listen(3000, 'localhost', () => {
-  console.log('WebSocket server is running on ws://localhost:3000');
+server.listen(3000, '0.0.0.0', () => {
+  console.log('WebSocket server is running on ws://ec2-3-147-205-48.us-east-2.compute.amazonaws.com:3000');
 });
 
 const rooms = {};

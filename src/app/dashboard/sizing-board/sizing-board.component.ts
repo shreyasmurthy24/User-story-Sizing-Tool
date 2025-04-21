@@ -75,7 +75,7 @@ export class SizingBoardComponent implements OnInit{
       return;
     }
 
-    const wsUrl = `ws://localhost:3000?pin=${this.pin}`;
+    const wsUrl = `ws://ec2-3-147-205-48.us-east-2.compute.amazonaws.com:3000?pin=${this.pin}`;
 
     this.socket$ = new WebSocketSubject(wsUrl);
     this.socket$.subscribe((message: any) => {
