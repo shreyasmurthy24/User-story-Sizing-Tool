@@ -25,6 +25,7 @@ export class SizingBoardComponent implements OnInit{
   private socket$!: WebSocketSubject<any>;
   users: { userName: string }[] = [];
   userNames: string[] = [];
+  currentUserName: string = '';
   numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   clickedNumbers: (number | null)[] = [];
   displaySymbol: string[] = ['*', '*', '*', '*', '*'];
@@ -59,6 +60,7 @@ export class SizingBoardComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(userName => {
       if (userName) {
+        this.currentUserName = userName;
         this.userNames.push(userName);
         console.log('User name entered:', userName);
         this.initializeWebSocket(userName);
@@ -84,32 +86,42 @@ export class SizingBoardComponent implements OnInit{
         this.userNames = this.users.map(user => user.userName);
         this.clickedNumbers = new Array(this.userNames.length).fill(null);
       }
+
+      if (message.type === 'REVEAL') {
+        this.clickedNumbers = message.clickedNumbers;
+        this.isRevealed = true;
+        this.displayRobotImagesBasedOnUserSizes();
+      }
     });
 
     this.socket$.next({ type: 'JOIN_ROOM', userName, pin: this.pin });
   }
 
   onNumberClick(num: number) {
-    if (this.clickedNumbers) {
-      for (let i = 0; i < this.clickedNumbers.length; i++) {
-        if (this.clickedNumbers[i] === null) {
-          this.clickedNumbers[i] = num;
+    const userIndex = this.userNames.indexOf(this.currentUserName);
+    if (userIndex !== -1 && this.clickedNumbers[userIndex] === null) {
+      this.clickedNumbers[userIndex] = num;
 
-          this.socket$.next({
-            type: 'NUMBER_CLICKED',
-            userName: this.userNames[i],
-            number: num,
-            pin: this.pin
-          });
+      this.socket$.next({
+        type: 'NUMBER_CLICKED',
+        userName: this.currentUserName,
+        number: num,
+        pin: this.pin
+      });
 
-          break;
-        }
-      }
       this.isRevealed = false;
+    } else {
+      console.error('Unable to map the clicked number to the logged-in user.');
     }
   }
 
   onReveal(): void {
+    this.socket$.next({
+      type: 'REVEAL',
+      pin: this.pin,
+      clickedNumbers: this.clickedNumbers
+    });
+
     this.displayRobotImagesBasedOnUserSizes();
   }
 

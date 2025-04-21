@@ -43,6 +43,11 @@ wss.on('connection', (ws, req) => {
       console.log(`Number clicked by ${data.userName}: ${data.number}`);
       broadcast(pin, { type: 'NUMBER_CLICKED', userName: data.userName, number: data.number });
     }
+
+    if (data.type === 'REVEAL') {
+      console.log(`Reveal action triggered for PIN: ${pin}`);
+      broadcast(pin, { type: 'REVEAL', clickedNumbers: data.clickedNumbers });
+    }
   });
 
   ws.on('close', () => {
