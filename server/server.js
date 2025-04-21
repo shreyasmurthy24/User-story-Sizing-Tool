@@ -38,6 +38,11 @@ wss.on('connection', (ws, req) => {
       console.log(`User ${data.userName} joined room ${pin}`);
       broadcast(pin, { type: 'USER_JOINED', users: rooms[pin].map(user => ({ userName: user.userName })) });
     }
+
+    if (data.type === 'NUMBER_CLICKED') {
+      console.log(`Number clicked by ${data.userName}: ${data.number}`);
+      broadcast(pin, { type: 'NUMBER_CLICKED', userName: data.userName, number: data.number });
+    }
   });
 
   ws.on('close', () => {

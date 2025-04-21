@@ -94,6 +94,14 @@ export class SizingBoardComponent implements OnInit{
       for (let i = 0; i < this.clickedNumbers.length; i++) {
         if (this.clickedNumbers[i] === null) {
           this.clickedNumbers[i] = num;
+
+          this.socket$.next({
+            type: 'NUMBER_CLICKED',
+            userName: this.userNames[i],
+            number: num,
+            pin: this.pin
+          });
+
           break;
         }
       }
