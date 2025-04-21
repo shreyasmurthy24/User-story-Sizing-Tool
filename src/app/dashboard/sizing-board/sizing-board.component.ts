@@ -87,7 +87,16 @@ export class SizingBoardComponent implements OnInit{
         this.clickedNumbers = new Array(this.userNames.length).fill(null);
       }
 
+      if (message.type === 'NUMBER_CLICKED') {
+        console.log(`Number clicked by ${message.userName}: ${message.number}`);
+        const userIndex = this.userNames.indexOf(message.userName);
+        if (userIndex !== -1) {
+          this.clickedNumbers[userIndex] = message.number;
+        }
+      }
+
       if (message.type === 'REVEAL') {
+        console.log('Reveal event received');
         this.clickedNumbers = message.clickedNumbers;
         this.isRevealed = true;
         this.displayRobotImagesBasedOnUserSizes();
