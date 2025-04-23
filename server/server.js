@@ -48,6 +48,11 @@ wss.on('connection', (ws, req) => {
       console.log(`Reveal action triggered for PIN: ${pin}`);
       broadcast(pin, { type: 'REVEAL', clickedNumbers: data.clickedNumbers });
     }
+
+    if (data.type === 'RESET') {
+      console.log(`Reset action triggered for PIN: ${pin}`);
+      broadcast(pin, { type: 'RESET' });
+    }
   });
 
   ws.on('close', () => {

@@ -101,6 +101,14 @@ export class SizingBoardComponent implements OnInit{
         this.isRevealed = true;
         this.displayRobotImagesBasedOnUserSizes();
       }
+
+      if (message.type === 'RESET') {
+        console.log('Reset event received');
+        this.isRevealed = false;
+        this.clickedNumbers = new Array(this.users.length).fill(null);
+        this.displaySymbol = new Array(this.users.length).fill('?');
+        this.robotImage = '';
+      }
     });
 
     this.socket$.next({ type: 'JOIN_ROOM', userName, pin: this.pin });
@@ -188,6 +196,11 @@ export class SizingBoardComponent implements OnInit{
     this.clickedNumbers = new Array(this.users.length).fill(null);
     this.displaySymbol = new Array(this.users.length).fill('?');
     this.robotImage = '';
+
+    this.socket$.next({
+      type: 'RESET',
+      pin: this.pin
+    });
   }
 
   calculateAverage(): number {
