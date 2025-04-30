@@ -15,7 +15,7 @@ app.get('/*', (req, res) => {
 });
 
 server.listen(3000, '0.0.0.0', () => {
-  console.log('WebSocket server is running on ws://ec2-18-220-124-237.us-east-2.compute.amazonaws.com:3000');
+  console.log('WebSocket server is running on wss://3.15.110.18:3000');
 });
 
 const rooms = {};
