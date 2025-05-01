@@ -77,7 +77,7 @@ export class SizingBoardComponent implements OnInit{
       return;
     }
 
-    const wsUrl = `wss://3.15.110.18:3000?pin=${this.pin}`;
+    const wsUrl = `wss://tap-size.amrock-sb.foc.zone:3000?pin=${this.pin}`;
 
     this.socket$ = new WebSocketSubject(wsUrl);
     this.socket$.subscribe((message: any) => {
