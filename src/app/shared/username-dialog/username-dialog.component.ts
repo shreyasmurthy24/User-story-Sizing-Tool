@@ -37,7 +37,7 @@ export class LoggingService {
     </div>
     <div mat-dialog-actions class="dialog-actions">
       <button mat-button (click)="onCancel()" class="cancel-button">Cancel</button>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!userName.trim()" cdkFocusInitial>Join</button>
+      <button mat-raised-button color="primary" class="join-button" (click)="onSubmit()" [disabled]="!userName.trim()" cdkFocusInitial>Join</button>
     </div>
   `,
   styles: [`
@@ -55,6 +55,7 @@ export class LoggingService {
       border: 1px solid #ddd;
       border-radius: 8px;
       background-color: #f9f9f9;
+      width: 100%;
     }
     .full-width {
       width: 100%;
@@ -62,14 +63,17 @@ export class LoggingService {
     .dialog-actions {
       display: flex;
       justify-content: space-between;
-      padding: 10px 0;
+      padding: 10px 10px;
       margin-top: 10px;
     }
     .dialog-actions button {
-      min-width: 120px;
+      min-width: 100px;
     }
     .cancel-button {
       color: #f44336;
+    }
+      .join-button {
+      color:rgb(117, 108, 243);
     }
   `]
 })
@@ -89,19 +93,17 @@ export class UsernameDialogComponent {
   }
 
   onSubmit(): void {
-    this.logger.log('Username dialog submitted with username:', this.userName.trim());
     this.dialogRef.close(this.userName.trim());
   }
 
   openDialog(): void {
-    this.logger.log('Opening username dialog...'); // Debug log
     const dialogRef = this.dialog.open(UsernameDialogComponent, {
-      width: '400px',
+      width: '900px',
+      maxWidth: 'none',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.logger.log('Dialog closed with username:', result);
       } else {
         this.logger.log('Dialog was closed without a username.');
       }
