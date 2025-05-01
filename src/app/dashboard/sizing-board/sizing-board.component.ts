@@ -36,18 +36,14 @@ export class SizingBoardComponent implements OnInit{
   pin: string = '';
 
   constructor(private route: ActivatedRoute, private dialog: MatDialog) {
-    console.log('SizingBoardComponent constructor called');
   }
 
   ngOnInit() : void {
-    console.log('SizingBoardComponent initialized');
     this.route.queryParams.subscribe(params => {
       this.pin = params['pin'];
       if (this.pin) {
-        console.log('PIN found in URL:', this.pin);
         this.openUsernameDialog();
       } else {
-        console.error('PIN is missing in the URL.');
       }
     });
   }
@@ -62,7 +58,6 @@ export class SizingBoardComponent implements OnInit{
       if (userName) {
         this.currentUserName = userName;
         this.userNames.push(userName);
-        console.log('User name entered:', userName);
         this.initializeWebSocket(userName);
         this.clickedNumbers = new Array(this.userNames.length).fill(null);
       } else {
@@ -88,7 +83,6 @@ export class SizingBoardComponent implements OnInit{
       }
 
       if (message.type === 'NUMBER_CLICKED') {
-        console.log(`Number clicked by ${message.userName}: ${message.number}`);
         const userIndex = this.userNames.indexOf(message.userName);
         if (userIndex !== -1) {
           this.clickedNumbers[userIndex] = message.number;
@@ -96,14 +90,12 @@ export class SizingBoardComponent implements OnInit{
       }
 
       if (message.type === 'REVEAL') {
-        console.log('Reveal event received');
         this.clickedNumbers = message.clickedNumbers;
         this.isRevealed = true;
         this.displayRobotImagesBasedOnUserSizes();
       }
 
       if (message.type === 'RESET') {
-        console.log('Reset event received');
         this.isRevealed = false;
         this.clickedNumbers = new Array(this.users.length).fill(null);
         this.displaySymbol = new Array(this.users.length).fill('?');
@@ -147,15 +139,12 @@ export class SizingBoardComponent implements OnInit{
       this.robotImage = 'assets/HappyRobot.png';
       this.isRevealed = true;
     } else if (this.clickedNumberAreUnique()) {
-      console.log('All clicked numbers are unique');
       this.robotImage = 'assets/SurprizedRobot.png';
       this.isRevealed = true;
     } else if (this.areSixtyPercentNumbersSame()) {
-      console.log('At least 60% of the clicked numbers are the same');
       this.robotImage = 'assets/SortOfHappy.png';
       this.isRevealed = true;
     } else {
-      console.log('More than 60% of the clicked numbers are different');
       this.robotImage = 'assets/SortOfSurprizedRobot.png';
       this.isRevealed = true;
     }
@@ -165,8 +154,18 @@ export class SizingBoardComponent implements OnInit{
     if (this.clickedNumbers.length === 0) {
       return false;
     }
-    const firstNumber = this.clickedNumbers[0];
-    return this.clickedNumbers.every(num => num === firstNumber);
+  
+    const numberCounts = this.clickedNumbers.reduce((acc, num) => {
+      if (num !== null) {
+        acc[num] = (acc[num] || 0) + 1;
+      }
+      return acc;
+    }, {} as { [key: number]: number });
+  
+    const totalNumbers = this.clickedNumbers.filter(num => num !== null).length;
+    const ninetyPercent = totalNumbers * 0.9;
+  
+    return Object.values(numberCounts).some(count => count >= ninetyPercent);
   }
 
   clickedNumberAreUnique(): boolean {
