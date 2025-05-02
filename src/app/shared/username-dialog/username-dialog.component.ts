@@ -29,7 +29,7 @@ export class LoggingService {
   template: `
     <h1 mat-dialog-title class="dialog-title">Welcome!</h1>
     <div mat-dialog-content class="dialog-content">
-      <p>Please enter your name to join the room:</p>
+      <p style="color: white;">Please enter your name to join the room:</p>
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Username</mat-label>
         <input matInput [(ngModel)]="userName" />
@@ -46,6 +46,8 @@ export class LoggingService {
       font-size: 1.5rem;
       font-weight: bold;
       margin-bottom: 10px;
+      color: white;
+      background-color: #de3341;
     }
     .dialog-content {
       text-align: center;
@@ -54,8 +56,8 @@ export class LoggingService {
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      background-color: #f9f9f9;
       width: 100%;
+      color: white;
     }
     .full-width {
       width: 100%;
