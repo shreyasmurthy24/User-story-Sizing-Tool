@@ -32,7 +32,7 @@ export class LoggingService {
       <p style="color: white;">Please enter your name to join the room:</p>
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Username</mat-label>
-        <input matInput [(ngModel)]="userName" (keydown.enter)="onSubmit()"/>
+        <input matInput [(ngModel)]="userName" />
       </mat-form-field>
     </div>
     <div mat-dialog-actions class="dialog-actions">
@@ -95,10 +95,7 @@ export class UsernameDialogComponent {
   }
 
   onSubmit(): void {
-    if (this.userName.trim()) {
-      this.dialogRef.close(this.userName.trim());
-      this.router.navigateByUrl('/sizing-board');
-    }
+    this.dialogRef.close(this.userName.trim());
   }
 
   openDialog(): void {
