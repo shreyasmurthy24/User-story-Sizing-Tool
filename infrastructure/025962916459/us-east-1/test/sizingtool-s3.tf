@@ -1,6 +1,6 @@
 module "sizingtool-s3-cloudfront" {
   source                         = "git::https://github.com/foc-iac/terraform-aws-s3-cloudfront-waf.git?ref=5.2.0"
-  aws_account_id                 = "025962916459"
+  aws_account_id                 = "517666809163"
   aws_region                     = "us-east-1"
   app_id                         = "222530"
   application_name               = "tapsizingtool"

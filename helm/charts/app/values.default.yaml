@@ -1,0 +1,88 @@
+############################################################
+## For YAML Linting inside VS Code include the line below ##
+############################################################
+# yaml-language-server: $schema=https://git.rockfin.com/raw/helm/ql-helm-charts/master/charts/app-template/values.schema.json
+#-----------------------------------------------------
+#------------------Global Variables-------------------
+#-----------------------------------------------------
+global:
+  platform: "aws"
+  awsRegion: 'us-east-2'
+  appId: 222935
+  appName: SizingTool
+  developmentTeamEmail: shreyasmurthychitloorkrishna
+
+  awsConfig:
+    createIamRole: true
+    createEcrRepo: false
+
+  healthCheck:
+    path: /healthz
+    port: 5556
+
+  #----------------------------------------------------
+  # Below is the configuration for secrets. Valid values for type are 'kubernetes', 'secretsManager' or 'systemManager'(ParameterStore)
+  # Syntax of secrets block is NAME_OF_AWS_SECRET: NAME_OF_CONTAINER_ENVIRONMENT_VARIABLE if secretsManager or systemManger. Example: /test/302040/rds_password : RDS_PASSWORD
+  # Syntax of secrets block is NAME_OF_SECRET: VALUE if kubernetes. You would inject this via sed or some other means in your pipeline.
+  # secretsConfig:
+  #   type: secretsManager
+  #     /test/302040/rds_password : RDS_PASSWORD
+  
+  #-----------------------------------------------------
+  #----------------Deployment Variables-----------------
+  #-----------------------------------------------------
+  deployment:
+    type: simple
+    primary:
+      replicaCount: 1
+      image:
+        - repository: '517666809163.dkr.ecr.us-east-2.amazonaws.com/sizing-tool:latest'
+          pullPolicy: Always
+  
+  #-----------------------------------------------------
+  #------------------Service Variables------------------
+  #-----------------------------------------------------
+  # Set to 'true' to create an endpoint that exposes your application via http/https. 
+  # Set to 'false' for a worker process with no listener.
+  service:
+    enabled: true
+    targetPort: 5556
+
+  #-----------------------------------------------------
+  #--------------Authentication Variables---------------
+  #-----------------------------------------------------
+  # Authentication - Use this section to define what service accounts (inside the same cluster) 
+  # or external tokens are allowed to access your api. If only consumers are external, you don't 
+  # need the internal block
+  auth:
+    internal:
+      - namespace: ''
+        serviceaccounts:
+          - name: ''
+            methods: ['*']
+            paths: ['/*']
+    external:
+      - type: anonymous
+        conditions:
+          - methods: ['*']
+            paths: ['/*']
+            ipAllowList: ['12.165.188.0/24', '162.252.136.0/21']
+
+  #-----------------------------------------------------
+  #----------External Ingress Variables-----------------
+  #-----------------------------------------------------
+  # Use this section to define whether or not to expose your application to the internet and the externalUrl to use.
+  externalIngress:
+    enabled: true
+    type: istio
+
+  #-----------------------------------------------------
+  #--------External Egress (Firewall) Variables---------
+  #-----------------------------------------------------
+  # Use this section to define what hostname:port combinations your application needs to hit
+  egress:
+    enabled: true
+    hosts:
+      microsoft: login.microsoftonline.com:443
+      events: events.rockfin.com:443
+      splunk: events.mgmtx.rocket.mortgage:443

@@ -2,7 +2,7 @@ variables:
 - name: apiUrl
   value: https://tapsizingtool-test.amrock-sb.foc.zone
 - name: AWS_ROLE_ARN
-  value: arn:aws:iam::025962916459:role/iac/ec2/role-sandbox-us-east-2-210461-ado-runner
+  value: arn:aws:iam::517666809163:role/iac/ec2/role-sandbox-us-east-2-210461-ado-runner
 - name: cloudFrontDistributionId
   value: EVJO95A6LYZYU
 - name: bucketName
