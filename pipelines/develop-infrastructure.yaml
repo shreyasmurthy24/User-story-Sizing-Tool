@@ -32,7 +32,7 @@ stages:
     - stageName: infrastructure_test
       environment: test
       dependsOn: publish_pipeline_artifacts_infrastructure
-      poolName: Amrock_Sandbox_AWS_ADO_Runner
+      poolName: Amrock_NonProd_AWS_ADO_Runner
       scalrEnvironmentName: AR-Shared NonProd-517666809163
       terraformPath: infrastructure/517666809163/us-east-1/test
       workspaceName: test-222530-us-east-1-tapsizingtool

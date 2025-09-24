@@ -27,7 +27,7 @@ stages:
     - stageName: sizingtool_test
       environment: test
       dependsOn: nodejs_compile_sizing_tool
-      poolName: Amrock_Sandbox_AWS_ADO_Runner
+      poolName: Amrock_NonProd_AWS_ADO_Runner
       variables: pipelines/variables/test.yaml@self
       bucketName: $(bucketName)
       cloudFrontDistributionId: $(cloudFrontDistributionId)
