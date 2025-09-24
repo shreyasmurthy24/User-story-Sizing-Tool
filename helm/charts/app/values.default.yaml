@@ -84,5 +84,3 @@ global:
     enabled: true
     hosts:
       microsoft: login.microsoftonline.com:443
-      events: events.rockfin.com:443
-      splunk: events.mgmtx.rocket.mortgage:443
