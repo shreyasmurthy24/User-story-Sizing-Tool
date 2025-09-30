@@ -1,0 +1,27 @@
+global:
+  accountNumber: '517666809163'
+  environment: test
+
+  environmentVariables:
+  deployment:
+    primary:
+      replicaCount: 1
+
+  auth:
+    internal:
+      - namespace: sizing-tool-test
+        serviceaccounts:
+          - name: 'test-sizing-tool'
+            methods: ['*']
+            paths: ['/*']
+    external:
+      - type: anonymous
+        conditions:
+          - methods: ['*']
+            paths: ['/*']
+            ipAllowList: ['18.188.154.129','3.143.157.3','3.22.76.125','3.12.90.32', '3.21.91.89', '18.224.254.25','18.223.36.208','18.118.91.161','3.130.19.5']
+
+  externalIngress:
+    enabled: true
+    type: istio
+    externalUrl: 'sizing-tool.amrock-sb.foc.zone'

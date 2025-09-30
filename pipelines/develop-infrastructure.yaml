@@ -1,0 +1,30 @@
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
+    ref: refs/tags/stable
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - infrastructure
+
+variables:
+- group: common
+
+# scalr-deploy
+- template: stages/scalr-deploy.yaml@templates
+  parameters:
+    repoName: SizingTool
+    environments:
+    - stageName: infrastructure_test
+      environment: test
+      poolName: Amrock_Shared_NonProd_AWS_ADO_Runner
+      scalrEnvironmentName: AR-Shared NonProd-517666809163
+      tfVariables: infrastructure/variables/test.tfvars
+      terraformPath: infrastructure
+      workspaceName: test-222935-us-east-1-tapsizingtool

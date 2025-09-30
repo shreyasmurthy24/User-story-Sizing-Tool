@@ -1,0 +1,17 @@
+nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-color: #de3341;
+}
+
+a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: blue;
+}

@@ -1,0 +1,33 @@
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: DevOps/Amrock.DevOps.Pipelines.Templates.Cloud
+    ref: refs/tags/stable
+
+trigger:
+  branches:
+    include:
+      - develop
+
+stages:
+#compile
+- template: stages/nodejs-compile.yaml@templates
+  parameters:
+    stageName: sizing_tool
+    projectPath: /
+    sonarProjectName: SizingTool
+    snykOrganization: appraisal
+    #publishPath: /dist
+
+#deploy
+- template: stages/nodejs-deploy.yaml@templates
+  parameters:
+    environments:
+    - stageName: sizingtool_test
+      environment: test
+      dependsOn: nodejs_compile_sizing_tool
+      poolName: Amrock_Shared_NonProd_AWS_ADO_Runner
+      variables: pipelines/variables/test.yaml@self
+      bucketName: $(bucketName)
+      cloudFrontDistributionId: E1EZFB770IJKT0

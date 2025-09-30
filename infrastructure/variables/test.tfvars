@@ -1,0 +1,5 @@
+aws_account_id     = "517666809163"
+app_id             = "222935"
+environment        = "test"
+domain_app_name    = "sizing-tool-test"
+domain_environment = "AR-Shared NonProd"
