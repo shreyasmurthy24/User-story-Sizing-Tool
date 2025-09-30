@@ -1,18 +1,11 @@
-const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const http = require('http');
-const https = require('https');
 const WebSocket = require('ws');
 
 const app = express();
 
-const sslOptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/tap-size.amrock-sb.foc.zone/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/tap-size.amrock-sb.foc.zone/fullchain.pem'),
-};
-
-const server = https.createServer(sslOptions, app);
+const server = http.createServer(app);
 const wss = new WebSocket.Server({ server }); 
 
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -22,7 +15,10 @@ app.get('/*', (req, res) => {
 });
 
 server.listen(3000, '0.0.0.0', () => {
-  console.log('WebSocket server is running on wss://tap-size.amrock-sb.foc.zone:3000');
+  console.log('HTTP Server is running on port 3000');
+  console.log('Access the app at: http://18.118.156.52:3000');
+  console.log('Alternative URL: http://ec2-18-118-156-52.us-east-2.compute.amazonaws.com:3000');
+  console.log('WebSocket server is running on ws://18.118.156.52:3000');
 });
 
 const rooms = {};

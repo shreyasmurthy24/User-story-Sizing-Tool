@@ -17,7 +17,7 @@ stages:
     stageName: sizing_tool
     projectPath: /
     sonarProjectName: SizingTool
-    snykOrganization: appraisal
+    snykOrganization: shared-1c5
     #publishPath: /dist
 
 #deploy
