@@ -15,14 +15,15 @@ const sslOptions = {
 const server = https.createServer(sslOptions, app);
 const wss = new WebSocket.Server({ server }); 
 
-app.use(express.static(path.join(__dirname, 'dist')));
+// Serve static files from the dist directory (one level up from server folder)
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-server.listen(3000, '0.0.0.0', () => {
-  console.log('WebSocket server is running on wss://sizing-tool-test.amrock-shared-np.foc.zone:3000');
+server.listen(443, '0.0.0.0', () => {
+  console.log('WebSocket server is running on wss://sizing-tool-test.amrock-shared-np.foc.zone');
 });
 
 const rooms = {};
