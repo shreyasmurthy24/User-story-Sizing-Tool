@@ -72,7 +72,7 @@ export class SizingBoardComponent implements OnInit{
       return;
     }
 
-    const wsUrl = `wss://sizing-tool-test.amrock-shared-np.foc.zone:3000?pin=${this.pin}`;
+    const wsUrl = `wss://sizing-tool-test.amrock-shared-np.foc.zone?pin=${this.pin}`;
 
     this.socket$ = new WebSocketSubject(wsUrl);
     this.socket$.subscribe((message: any) => {

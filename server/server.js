@@ -15,14 +15,15 @@ const sslOptions = {
 const server = https.createServer(sslOptions, app);
 const wss = new WebSocket.Server({ server }); 
 
-// Serve static files from the dist directory (one level up from server folder)
 app.use(express.static(path.join(__dirname, '../dist')));
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 server.listen(443, '0.0.0.0', () => {
+  console.log('HTTPS Server is running on port 443');
+  console.log('Access the app at: https://sizing-tool-test.amrock-shared-np.foc.zone');
   console.log('WebSocket server is running on wss://sizing-tool-test.amrock-shared-np.foc.zone');
 });
 
