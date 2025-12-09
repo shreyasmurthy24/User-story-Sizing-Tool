@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { UserService } from '../../service/user-service.service';
   templateUrl: './user-login.component.html',
   styleUrl: './user-login.component.scss',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [ReactiveFormsModule]
 })
 export class UserLoginComponent {
   generatedPinValue: string = '';

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:angular.dev)",
+      "Bash(npm view:*)",
+      "Bash(npx @angular/cli@20 update:*)",
+      "Bash(npx @angular/cli@21 update:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build)",
+      "Bash(npm run test-ci)",
+      "Bash(npm audit)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

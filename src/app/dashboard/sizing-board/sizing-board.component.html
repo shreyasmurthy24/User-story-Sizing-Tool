@@ -1,36 +1,50 @@
 <div class="sizing-container">
-    <div class="content">
-        <div class="rktLogo">
-            <img src="assets/RktLogo.png" alt="Rocket Close">
-        </div>
-        <div class="user-list">
-            <div class="user-item" *ngFor="let user of userNames; let i = index">
-                <div class="user-name">{{ user }}</div>
-                <div class="user-number">
-                    <span *ngIf="clickedNumbers[i] === null">{{ displaySymbol[i] }}</span>
-                    <span *ngIf="clickedNumbers[i] !== null && !isRevealed">{{ tickMark }}</span>
-                    <span *ngIf="isRevealed && clickedNumbers[i] !== null" class="number-box-inline">{{
-                        clickedNumbers[i] }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="average-container" *ngIf="isRevealed">
-            <label class="average-label">Average:</label>
-            <span class="average-value">{{ calculateAverage() }}</span>
-        </div>
-        <div class="controls">
-            <div class="box">
-                <button class="button" (click)="onReveal()">Reveal</button>
-                <button class="button" (click)="onReset()" style="margin-top: 10px;">Reset</button>
-            </div>
-            <div class="robot-container" *ngIf="isRevealed">
-                <img [src]="robotImage" alt="Robot" class="robot-image">
-            </div>
-        </div>
-        <div class="number-boxes">
-            <div class="number-box" *ngFor="let number of numbers" (click)="onNumberClick(number)">
-                {{ number }}
-            </div>
-        </div>
+  <div class="content">
+    <div class="rktLogo">
+      <img src="assets/RktLogo.png" alt="Rocket Close">
     </div>
+    <div class="user-list">
+      @for (user of userNames; track user; let i = $index) {
+        <div class="user-item">
+          <div class="user-name">{{ user }}</div>
+          <div class="user-number">
+            @if (clickedNumbers[i] === null) {
+              <span>{{ displaySymbol[i] }}</span>
+            }
+            @if (clickedNumbers[i] !== null && !isRevealed) {
+              <span>{{ tickMark }}</span>
+            }
+            @if (isRevealed && clickedNumbers[i] !== null) {
+              <span class="number-box-inline">{{
+              clickedNumbers[i] }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+    @if (isRevealed) {
+      <div class="average-container">
+        <label class="average-label">Average:</label>
+        <span class="average-value">{{ calculateAverage() }}</span>
+      </div>
+    }
+    <div class="controls">
+      <div class="box">
+        <button class="button" (click)="onReveal()">Reveal</button>
+        <button class="button" (click)="onReset()" style="margin-top: 10px;">Reset</button>
+      </div>
+      @if (isRevealed) {
+        <div class="robot-container">
+          <img [src]="robotImage" alt="Robot" class="robot-image">
+        </div>
+      }
+    </div>
+    <div class="number-boxes">
+      @for (number of numbers; track number) {
+        <div class="number-box" (click)="onNumberClick(number)">
+          {{ number }}
+        </div>
+      }
+    </div>
+  </div>
 </div>

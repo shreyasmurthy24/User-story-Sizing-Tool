@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -20,12 +20,11 @@ export class LoggingService {
   selector: 'app-username-dialog',
   standalone: true,
   imports: [
-    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
     MatDialogModule
-  ],
+],
   template: `
     <h1 mat-dialog-title class="dialog-title">Welcome!</h1>
     <div mat-dialog-content class="dialog-content">

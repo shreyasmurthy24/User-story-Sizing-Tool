@@ -1,25 +1,29 @@
 <form [formGroup]="formGroup">
-    <div class="sizing-tool-header">
-        <h2>Rocket Close Sizing Tool</h2>
-    </div>
-    <div class="login-container">
-        <div class="login-box">
-            <h1 class="title">Login</h1>
-            <div class="field is-horizontal">
-                <label for="userName" class="label">User Name : </label>
-                <input id="userName" formControlName="userName" class="input" type="text" #userName
-                    placeholder="Enter your name">
-            </div>
-            <div *ngIf="formGroup.get('userName')?.invalid && formGroup.get('userName')?.touched" class="error-message">
-                User name is required</div>
-            <div class="field is-horizontal">
-                <label for="pin" class="label">Input Pin : </label>
-                <input id="pin" class="input pin-input" type="text" #pinInput placeholder="Generated pin">
-            </div>
-            <div *ngIf="formGroup.get('pin')?.invalid && formGroup.get('pin')?.touched" class="error-message">
-                PIN is required</div>
-            <button class="button" (click)="onLogin()">Login</button>
-            <button class="button" (click)="generatePin(pinInput)">Generate Pin</button>
+  <div class="sizing-tool-header">
+    <h2>Rocket Close Sizing Tool</h2>
+  </div>
+  <div class="login-container">
+    <div class="login-box">
+      <h1 class="title">Login</h1>
+      <div class="field is-horizontal">
+        <label for="userName" class="label">User Name : </label>
+        <input id="userName" formControlName="userName" class="input" type="text" #userName
+          placeholder="Enter your name">
         </div>
+        @if (formGroup.get('userName')?.invalid && formGroup.get('userName')?.touched) {
+          <div class="error-message">
+          User name is required</div>
+        }
+        <div class="field is-horizontal">
+          <label for="pin" class="label">Input Pin : </label>
+          <input id="pin" class="input pin-input" type="text" #pinInput placeholder="Generated pin">
+        </div>
+        @if (formGroup.get('pin')?.invalid && formGroup.get('pin')?.touched) {
+          <div class="error-message">
+          PIN is required</div>
+        }
+        <button class="button" (click)="onLogin()">Login</button>
+        <button class="button" (click)="generatePin(pinInput)">Generate Pin</button>
+      </div>
     </div>
-</form>
+  </form>

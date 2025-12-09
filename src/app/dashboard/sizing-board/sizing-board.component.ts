@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -14,12 +14,11 @@ import { WebSocketSubject } from 'rxjs/webSocket';
   styleUrl: './sizing-board.component.scss',
   standalone: true,
   imports: [
-    CommonModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule
-  ]
+]
 })
 export class SizingBoardComponent implements OnInit{
   private socket$!: WebSocketSubject<any>;
