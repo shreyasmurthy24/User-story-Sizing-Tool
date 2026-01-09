@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:ws": "node server/server-local.js",
     "build": "ng build",
     "build-ci": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.0.2",
+    "ws": "^8.18.0",
     "@angular/cli": "^21.0.2",
     "@angular/compiler-cli": "^21.0.3",
     "@types/jasmine": "~5.1.0",

@@ -1,12 +1,13 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { UsernameDialogComponent } from '../../shared/username-dialog/username-dialog.component';
-import { WebSocketSubject } from 'rxjs/webSocket';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-sizing-board',
@@ -34,7 +35,7 @@ export class SizingBoardComponent implements OnInit{
   robotImage = '';
   pin: string = '';
 
-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private ngZone: NgZone, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() : void {
@@ -57,8 +58,10 @@ export class SizingBoardComponent implements OnInit{
       if (userName) {
         this.currentUserName = userName;
         this.userNames.push(userName);
-        this.initializeWebSocket(userName);
         this.clickedNumbers = new Array(this.userNames.length).fill(null);
+        this.displaySymbol = new Array(this.userNames.length).fill('?');
+        this.cdr.detectChanges();
+        this.initializeWebSocket(userName);
       } else {
         console.error('User name is required to join the room.');
       }
@@ -71,38 +74,54 @@ export class SizingBoardComponent implements OnInit{
       return;
     }
 
-    const wsUrl = `wss://sizing-tool-test.amrock-shared-np.foc.zone?pin=${this.pin}`;
+    const wsUrl = `${environment.wsUrl}?pin=${this.pin}`;
 
-    this.socket$ = new WebSocketSubject(wsUrl);
-    this.socket$.subscribe((message: any) => {
-      if (message.type === 'USER_JOINED') {
-        this.users = message.users;
-        this.userNames = this.users.map(user => user.userName);
-        this.clickedNumbers = new Array(this.userNames.length).fill(null);
-      }
-
-      if (message.type === 'NUMBER_CLICKED') {
-        const userIndex = this.userNames.indexOf(message.userName);
-        if (userIndex !== -1) {
-          this.clickedNumbers[userIndex] = message.number;
+    this.socket$ = webSocket({
+      url: wsUrl,
+      openObserver: {
+        next: () => {
+          this.socket$.next({ type: 'JOIN_ROOM', userName, pin: this.pin });
         }
-      }
-
-      if (message.type === 'REVEAL') {
-        this.clickedNumbers = message.clickedNumbers;
-        this.isRevealed = true;
-        this.displayRobotImagesBasedOnUserSizes();
-      }
-
-      if (message.type === 'RESET') {
-        this.isRevealed = false;
-        this.clickedNumbers = new Array(this.users.length).fill(null);
-        this.displaySymbol = new Array(this.users.length).fill('?');
-        this.robotImage = '';
       }
     });
 
-    this.socket$.next({ type: 'JOIN_ROOM', userName, pin: this.pin });
+    this.socket$.subscribe({
+      next: (message: any) => {
+        this.ngZone.run(() => {
+          if (message.type === 'USER_JOINED') {
+            this.users = message.users;
+            this.userNames = this.users.map(user => user.userName);
+            this.clickedNumbers = new Array(this.userNames.length).fill(null);
+            this.displaySymbol = new Array(this.userNames.length).fill('?');
+            this.cdr.detectChanges();
+          }
+
+          if (message.type === 'NUMBER_CLICKED') {
+            const userIndex = this.userNames.indexOf(message.userName);
+            if (userIndex !== -1) {
+              this.clickedNumbers[userIndex] = message.number;
+              this.cdr.detectChanges();
+            }
+          }
+
+          if (message.type === 'REVEAL') {
+            this.clickedNumbers = message.clickedNumbers;
+            this.isRevealed = true;
+            this.displayRobotImagesBasedOnUserSizes();
+            this.cdr.detectChanges();
+          }
+
+          if (message.type === 'RESET') {
+            this.isRevealed = false;
+            this.clickedNumbers = new Array(this.users.length).fill(null);
+            this.displaySymbol = new Array(this.users.length).fill('?');
+            this.robotImage = '';
+            this.cdr.detectChanges();
+          }
+        });
+      },
+      error: (err) => console.error('WebSocket error:', err)
+    });
   }
 
   onNumberClick(num: number) {

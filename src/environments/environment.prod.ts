@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
+    production: true,
     auth: {
         domain: `sso.test.authrock.com`,
         clientId: `4WRplWBaxEr7c7782bA9ZePNr4WQ46GQ`,
@@ -13,5 +13,6 @@ export const environment = {
     },
     serverUrl: 'https://tapsizingtool-test.amrock-sb.foc.zone/',
     //serverUrl: 'https://localhost:7259/',
-    tokenServerUrl: 'https://sso.test.authrock.com/oauth/token'
+    tokenServerUrl: 'https://sso.test.authrock.com/oauth/token',
+    wsUrl: 'wss://sizing-tool-test.amrock-shared-np.foc.zone'
 };

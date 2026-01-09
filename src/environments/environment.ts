@@ -13,5 +13,6 @@ export const environment = {
     },
     serverUrl: 'https://tapsizingtool-test.amrock-sb.foc.zone/',
     //serverUrl: 'https://localhost:7259/',
-    tokenServerUrl: 'https://sso.test.authrock.com/oauth/token'
+    tokenServerUrl: 'https://sso.test.authrock.com/oauth/token',
+    wsUrl: 'ws://localhost:8080'
 };
